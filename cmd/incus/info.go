@@ -9,7 +9,7 @@ import (
 	"github.com/spf13/cobra"
 	"gopkg.in/yaml.v2"
 
-	"github.com/lxc/incus/client"
+	incus "github.com/lxc/incus/client"
 	cli "github.com/lxc/incus/internal/cmd"
 	"github.com/lxc/incus/internal/i18n"
 	"github.com/lxc/incus/internal/instance"
@@ -433,6 +433,80 @@ func (c *cmdInfo) remoteInfo(d incus.InstanceServer) error {
 				fmt.Printf("  "+i18n.G("Disk %d:")+"\n", id)
 				c.renderDisk(nic, "    ", true)
 			}
+		}
+
+		// System
+		fmt.Printf("\n" + i18n.G("System:") + "\n")
+		if resources.System.Vendor != "" {
+			fmt.Printf("  "+i18n.G("Vendor: %v")+"\n", resources.System.Vendor)
+		}
+
+		if resources.System.Product != "" {
+			fmt.Printf("  "+i18n.G("Product: %v")+"\n", resources.System.Product)
+		}
+
+		if resources.System.Serial != "" {
+			fmt.Printf("  "+i18n.G("Product: %v")+"\n", resources.System.Product)
+		}
+
+		if resources.System.Type != "" {
+			fmt.Printf("  "+i18n.G("Type: %s")+"\n", resources.System.Type)
+		}
+
+		if resources.System.UUID != "" {
+			fmt.Printf("  "+i18n.G("UUID: %v")+"\n", resources.System.UUID)
+		}
+
+		// System: Chassis
+		fmt.Printf("\n" + i18n.G("  Chassis:") + "\n")
+		if resources.System.Chassis.Vendor != "" {
+			fmt.Printf("      "+i18n.G("Vendor: %s")+"\n", resources.System.Chassis.Vendor)
+		}
+
+		if resources.System.Chassis.Type != "" {
+			fmt.Printf("      "+i18n.G("Type: %s")+"\n", resources.System.Chassis.Type)
+		}
+
+		if resources.System.Chassis.Version != "" {
+			fmt.Printf("      "+i18n.G("Version: %s")+"\n", resources.System.Chassis.Version)
+		}
+
+		if resources.System.Chassis.Serial != "" {
+			fmt.Printf("      "+i18n.G("Serial: %s")+"\n", resources.System.Chassis.Serial)
+		}
+
+
+		// System: Motherboard
+		fmt.Printf("\n" + i18n.G("  Motherboard:") + "\n")
+		if resources.System.Motherboard.Vendor != "" {
+			fmt.Printf("      "+i18n.G("Vendor: %s")+"\n", resources.System.Chassis.Vendor)
+		}
+
+		
+mo		if resources.System.Motherboard.Product != "" {
+			fmt.Printf("      "+i18n.G("Product: %s")+"\n", resources.System.Chassis.Product)
+		}
+
+		if resources.System.Motherboard.Serial != "" {
+			fmt.Printf("      "+i18n.G("Serial: %s")+"\n", resources.System.Motherboard.Serial)
+		}
+
+		if resources.System.Motherboard.Version != "" {
+			fmt.Printf("      "+i18n.G("Version: %s")+"\n", resources.System.Motherboard.Version)
+		}
+
+		// System: Firmware
+		fmt.Printf("\n" + i18n.G("  Firmware:") + "\n")
+		if resources.System.Firmware.Vendor != "" {
+			fmt.Printf("      "+i18n.G("Vendor: %s")+"\n", resources.System.Firmware.Vendor)
+		}
+
+		if resources.System.Firmware.Version != "" {
+			fmt.Printf("      "+i18n.G("Version: %s")+"\n", resources.System.Firmware.Version)
+		}
+
+		if resources.System.Firmware.Date != "" {
+			fmt.Printf("      "+i18n.G("Date: %s")+"\n", resources.System.Firmware.Date)
 		}
 
 		return nil
