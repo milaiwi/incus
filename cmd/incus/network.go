@@ -1001,6 +1001,7 @@ type cmdNetworkList struct {
 	network *cmdNetwork
 
 	flagFormat string
+    flagAllProjects bool
 }
 
 func (c *cmdNetworkList) Command() *cobra.Command {
@@ -1011,6 +1012,7 @@ func (c *cmdNetworkList) Command() *cobra.Command {
 	cmd.Long = cli.FormatSection(i18n.G("Description"), i18n.G(
 		`List available networks`))
 
+    cmd.Flags().BoolVar(&c.flagAllProjects, "all-projects", false, i18n.G("Display images from all projects")) 
 	cmd.RunE = c.Run
 	cmd.Flags().StringVarP(&c.flagFormat, "format", "f", "table", i18n.G("Format (csv|json|table|yaml|compact)")+"``")
 

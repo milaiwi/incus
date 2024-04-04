@@ -236,6 +236,7 @@ type InstanceServer interface {
 
 	// Network zone functions ("network_dns" API extension)
 	GetNetworkZoneNames() (names []string, err error)
+    GetNetworkZonesAllProjects() (zones []api.NetworkZone, err error)
 	GetNetworkZones() (zones []api.NetworkZone, err error)
 	GetNetworkZone(name string) (zone *api.NetworkZone, ETag string, err error)
 	CreateNetworkZone(zone api.NetworkZonesPost) (err error)

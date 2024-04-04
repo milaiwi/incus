@@ -74,6 +74,7 @@ type cmdNetworkZoneList struct {
 	networkZone *cmdNetworkZone
 
 	flagFormat string
+    flagAllProjects bool
 }
 
 func (c *cmdNetworkZoneList) Command() *cobra.Command {
@@ -83,7 +84,9 @@ func (c *cmdNetworkZoneList) Command() *cobra.Command {
 	cmd.Short = i18n.G("List available network zoneS")
 	cmd.Long = cli.FormatSection(i18n.G("Description"), i18n.G("List available network zone"))
 
+    cmd.Flags().BoolVar(&c.flagAllProjects, "all-projects", false, i18n.G("Display images from all projects"))
 	cmd.RunE = c.Run
+
 	cmd.Flags().StringVarP(&c.flagFormat, "format", "f", "table", i18n.G("Format (csv|json|table|yaml|compact)")+"``")
 
 	cmd.ValidArgsFunction = func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
@@ -181,6 +184,11 @@ func (c *cmdNetworkZoneShow) Run(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
+    // Add project column if --all-projects flag specified and no -c was passed
+    if c.flagAllProjects && c.flagColumns == defaultImageColumns {
+        c.flagColumns = defaultImagesColumnsAllProjects
+    }
+
 	// Parse remote.
 	resources, err := c.global.ParseServers(args[0])
 	if err != nil {
@@ -194,11 +202,29 @@ func (c *cmdNetworkZoneShow) Run(cmd *cobra.Command, args []string) error {
 	}
 
 	// Show the network zone config.
+    var allZones []api.NetworkZone
+    if c.flagAllProjects {
+        allZones, err = resource.server.serverGetNetworkZonesAllProjects()
+        if err != nil {
+            return err
+        }
+    } else {
+        allZones, err = resource.server.GetNetworkZone(resource.name)
+        if err != nil {
+            allZones, err = resource.server.GetNetworkZone(resource.name)
+            if err != nil {
+                return err
+            }
+        }
+    }
+
+
+    /*
 	netZone, _, err := resource.server.GetNetworkZone(resource.name)
 	if err != nil {
 		return err
 	}
-
+    */
 	sort.Strings(netZone.UsedBy)
 
 	data, err := yaml.Marshal(&netZone)

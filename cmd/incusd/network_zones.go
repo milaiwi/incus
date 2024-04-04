@@ -21,6 +21,7 @@ import (
 	"github.com/lxc/incus/internal/version"
 	"github.com/lxc/incus/shared/api"
 	"github.com/lxc/incus/shared/logger"
+    "github.com/lxc/incus/shared/util"
 )
 
 var networkZonesCmd = APIEndpoint{
@@ -56,6 +57,10 @@ var networkZoneCmd = APIEndpoint{
 //      description: Project name
 //      type: string
 //      example: default
+//    - in: query
+//      name: all-projects
+//      description: Retrieve entities from all projects
+//      type: boolean
 //  responses:
 //    "200":
 //      description: API endpoints
@@ -140,6 +145,12 @@ func networkZonesGet(d *Daemon, r *http.Request) response.Response {
 	if err != nil {
 		return response.SmartError(err)
 	}
+    allProjects := util.IsTrue(request.QueryParam(r, "all-projects"))
+
+    // Cannot specify all projects and a project name
+    if allProjects && projectName != api.ProjectDefaultName {
+        return response.BadRequest(fmt.Errorf("Cannot specify a project when requesting all projects"))
+    }
 
 	recursion := localUtil.IsRecursionRequest(r)
 
