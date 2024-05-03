@@ -7,6 +7,7 @@ Incus supports the following storage drivers for storing images, instances and c
 :maxdepth: 1
 
 storage_dir
+storage_bcachefs
 storage_btrfs
 storage_lvm
 storage_zfs

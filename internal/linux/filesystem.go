@@ -17,7 +17,8 @@ import (
 
 // Filesystem magic numbers.
 const (
-	FilesystemSuperMagicZfs = 0x2fc12fc1
+	FilesystemSuperMagicZfs      = 0x2fc12fc1
+	FilesystemSuperMagicBcachefs = 0xca451a4e
 )
 
 // StatVFS retrieves Virtual File System (VFS) info about a path.
@@ -67,6 +68,8 @@ func FSTypeToName(fsType int32) (string, error) {
 		return "nfs", nil
 	case FilesystemSuperMagicZfs:
 		return "zfs", nil
+	case to32(FilesystemSuperMagicBcachefs):
+		return "bcachefs", nil
 	}
 
 	return fmt.Sprintf("0x%x", fsType), nil
