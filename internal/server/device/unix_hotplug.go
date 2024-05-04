@@ -45,12 +45,57 @@ func (d *unixHotplug) validateConfig(instConf instance.ConfigReader) error {
 	}
 
 	rules := map[string]func(string) error{
-		"vendorid":  validate.Optional(validate.IsDeviceID),
+		// gendoc:generate(entity=instance_device, group=unix-hotplug, key=vendorid)
+		//
+		// ---
+		//  key: vendorid
+		//  type: string
+		//  shortdesc: The vendor ID of the Unix device
+		"vendorid": validate.Optional(validate.IsDeviceID),
+
+		// gendoc:generate(entity=instance_device, group=unix-hotplug, key=productid)
+		//
+		// ---
+		//  key: productid
+		//  type: string
+		//  shortdesc: The product ID of the Unix device
 		"productid": validate.Optional(validate.IsDeviceID),
-		"uid":       unixValidUserID,
-		"gid":       unixValidUserID,
-		"mode":      unixValidOctalFileMode,
-		"required":  validate.Optional(validate.IsBool),
+
+		// gendoc:generate(entity=instance_device, group=unix-hotplug, key=uid)
+		//
+		// ---
+		//  key: uid
+		//  type: int
+		//  default: 0
+		//  shortdesc: UID of the device owner in the instance
+		"uid": unixValidUserID,
+
+		// gendoc:generate(entity=instance_device, group=unix-hotplug, key=gid)
+		//
+		// ---
+		//  key: gid
+		//  type: int
+		//  default: 0
+		//  shortdesc: GID of the device owner in the instance
+		"gid": unixValidUserID,
+
+		// gendoc:generate(entity=instance_device, group=unix-hotplug, key=mode)
+		//
+		// ---
+		//  key: mode
+		//  type: int
+		//  default: 0660
+		//  shortdesc: Mode of the device in the instance
+		"mode": unixValidOctalFileMode,
+
+		// gendoc:generate(entity=instance_device, group=unix-hotplug, key=required)
+		//
+		// ---
+		//  key: required
+		//  type: bool
+		//  default: false
+		//  shortdesc: Whether this device is required to start the instance (the default is `false`, and all devices can be hotplugged)
+		"required": validate.Optional(validate.IsBool),
 	}
 
 	err := d.config.Validate(rules)
