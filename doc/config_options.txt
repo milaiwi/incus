@@ -1001,6 +1001,111 @@ It is globally unique across all servers and projects.
 ```
 
 <!-- config group instance-volatile end -->
+<!-- config group instance_device-unix-char start -->
+```{config:option} gid instance_device-unix-char
+:default: "0"
+:key: "gid"
+:shortdesc: "GID of the device owner in the instance"
+:type: "int"
+
+```
+
+```{config:option} major instance_device-unix-char
+:default: "device on host"
+:key: "major"
+:shortdesc: "Device major number"
+:type: "int"
+
+```
+
+```{config:option} minor instance_device-unix-char
+:default: "device on host"
+:key: "minor"
+:shortdesc: "Device minor number"
+:type: "int"
+
+```
+
+```{config:option} mode instance_device-unix-char
+:default: "0660"
+:key: "mode"
+:shortdesc: "Mode of the device in the instance"
+:type: "int"
+
+```
+
+```{config:option} path instance_device-unix-char
+:key: "path"
+:shortdesc: "Path inside the instance (one of `source` and `path` must be set)"
+:type: "string"
+
+```
+
+```{config:option} required instance_device-unix-char
+:default: "true"
+:key: "required"
+:shortdesc: "Whether this device is required to start the instance"
+:type: "bool"
+
+```
+
+```{config:option} uid instance_device-unix-char
+:default: "0"
+:key: "uid"
+:shortdesc: "UID of the device owner in the instance"
+:type: "int"
+
+```
+
+<!-- config group instance_device-unix-char end -->
+<!-- config group instance_device-unix-hotplug start -->
+```{config:option} gid instance_device-unix-hotplug
+:default: "0"
+:key: "gid"
+:shortdesc: "GID of the device owner in the instance"
+:type: "int"
+
+```
+
+```{config:option} mode instance_device-unix-hotplug
+:default: "0660"
+:key: "mode"
+:shortdesc: "Mode of the device in the instance"
+:type: "int"
+
+```
+
+```{config:option} productid instance_device-unix-hotplug
+:key: "productid"
+:shortdesc: "The product ID of the Unix device"
+:type: "string"
+
+```
+
+```{config:option} required instance_device-unix-hotplug
+:default: "false"
+:key: "required"
+:shortdesc: "Whether this device is required to start the instance (the default is `false`, and all devices can be hotplugged)"
+:type: "bool"
+
+```
+
+```{config:option} uid instance_device-unix-hotplug
+:default: "0"
+:key: "uid"
+:shortdesc: "UID of the device owner in the instance"
+:type: "int"
+
+```
+
+```{config:option} vendorid instance_device-unix-hotplug
+:key: "vendorid"
+:shortdesc: "The vendor ID of the Unix device"
+:type: "string"
+
+```
+
+<!-- config group instance_device-unix-hotplug end -->
 <!-- config group network_integration-common start -->
 ```{config:option} user.* network_integration-common
 :shortdesc: "Free form user key/value storage"
