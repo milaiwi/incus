@@ -56,12 +56,67 @@ func (d *unixCommon) validateConfig(instConf instance.ConfigReader) error {
 
 			return &drivers.ErrInvalidPath{PrefixPath: d.state.DevMonitor.PrefixPath()}
 		},
-		"path":     validate.IsAny,
-		"major":    unixValidDeviceNum,
-		"minor":    unixValidDeviceNum,
-		"uid":      unixValidUserID,
-		"gid":      unixValidUserID,
-		"mode":     unixValidOctalFileMode,
+
+		// gendoc:generate(entity=instance_device, group=unix-char, key=path)
+		//
+		// ---
+		//  key: path
+		//  type: string
+		//  shortdesc: Path inside the instance (one of `source` and `path` must be set)
+		"path": validate.IsAny,
+
+		// gendoc:generate(entity=instance_device, group=unix-char, key=major)
+		//
+		// ---
+		//  key: major
+		//  type: int
+		//  default: device on host
+		//  shortdesc: Device major number
+		"major": unixValidDeviceNum,
+
+		// gendoc:generate(entity=instance_device, group=unix-char, key=minor)
+		//
+		// ---
+		//  key: minor
+		//  type: int
+		//  default: device on host
+		//  shortdesc: Device minor number
+		"minor": unixValidDeviceNum,
+
+		// gendoc:generate(entity=instance_device, group=unix-char, key=uid)
+		//
+		// ---
+		//  key: uid
+		//  type: int
+		//  default: 0
+		//  shortdesc: UID of the device owner in the instance
+		"uid": unixValidUserID,
+
+		// gendoc:generate(entity=instance_device, group=unix-char, key=gid)
+		//
+		// ---
+		//  key: gid
+		//  type: int
+		//  default: 0
+		//  shortdesc: GID of the device owner in the instance
+		"gid": unixValidUserID,
+
+		// gendoc:generate(entity=instance_device, group=unix-char, key=mode)
+		//
+		// ---
+		//  key: mode
+		//  type: int
+		//  default: 0660
+		//  shortdesc: Mode of the device in the instance
+		"mode": unixValidOctalFileMode,
+
+		// gendoc:generate(entity=instance_device, group=unix-char, key=required)
+		//
+		// ---
+		//  key: required
+		//  type: bool
+		//  default: true
+		//  shortdesc: Whether this device is required to start the instance
 		"required": validate.Optional(validate.IsBool),
 	}
 
